@@ -1,0 +1,11 @@
+table:
+  schema: public
+  name: scraps
+array_relationships:
+  - name: comments
+    using:
+      foreign_key_constraint_on:
+        column: scrap_id
+        table:
+          schema: public
+          name: comments
