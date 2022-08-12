@@ -1,0 +1,1 @@
+CREATE TABLE "public"."comments" ("id" serial NOT NULL, "body" text NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), "scrap_id" integer NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("scrap_id") REFERENCES "public"."scraps"("id") ON UPDATE cascade ON DELETE cascade);

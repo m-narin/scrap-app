@@ -1,0 +1,7 @@
+table:
+  schema: public
+  name: comments
+object_relationships:
+  - name: scrap
+    using:
+      foreign_key_constraint_on: scrap_id
