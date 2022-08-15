@@ -1,0 +1,7 @@
+query getScraps { 
+	scraps(order_by: {created_at: desc}) {
+		id
+		title
+		created_at
+	}
+}

@@ -1,10 +1,9 @@
 import type { NextPage } from 'next'
 import { useQuery } from '@apollo/client'
-import { GET_SCRAPS } from '../graphql/queries'
-import { GetScrapsQuery } from '../types/generated/graphql'
+import { GetScrapsQuery,GetScrapsDocument } from '../graphql/generated/graphql'
 
 const Home: NextPage = () => {
-  const { loading, data, error } = useQuery<GetScrapsQuery>(GET_SCRAPS)
+  const { loading, data, error } = useQuery<GetScrapsQuery>(GetScrapsDocument)
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {JSON.stringify(error)}</p>;
