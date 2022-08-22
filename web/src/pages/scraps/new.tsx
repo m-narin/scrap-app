@@ -24,7 +24,6 @@ const AddScrap = () => {
   return (
     <>
         <Stack mt={4} rowGap={4} alignItems="center">
-
           <Typography variant="h3">
             New Scrap
           </Typography>
@@ -34,7 +33,6 @@ const AddScrap = () => {
           </FormLabel>
         <form
           onSubmit={e => {
-
             // submitイベントのデフォルトの動作をキャンセルする
             e.preventDefault();
             mutate({ variables: { title: scrapInput } });

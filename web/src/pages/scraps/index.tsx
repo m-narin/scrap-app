@@ -26,7 +26,6 @@ const Home = () => {
 								cursor: "pointer",
 							},
 						}} 
-						
 						onClick={() => {
 							router.push(`/scraps/${scrap.id}`)
 						}}
