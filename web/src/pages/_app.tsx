@@ -1,5 +1,8 @@
 import { ApolloClient, InMemoryCache,ApolloProvider } from "@apollo/client"
 import type { AppProps } from 'next/app'
+import { Layout } from '../components/layout'
+
+import '../../styles/globals.css';
 
 const client = new ApolloClient({
     uri: process.env.NEXT_PUBLIC_GRAPHQL_API_URL,
@@ -9,7 +12,9 @@ const client = new ApolloClient({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ApolloProvider>
   );
 }

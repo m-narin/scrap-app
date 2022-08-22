@@ -1,27 +1,15 @@
-import type { NextPage } from 'next'
-import { useQuery } from '@apollo/client'
-import { GetScrapsQuery,GetScrapsDocument } from '../graphql/generated/graphql'
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-const Home: NextPage = () => {
-  const { loading, data, error } = useQuery<GetScrapsQuery>(GetScrapsDocument)
+const TopPage = () => {
+	const router = useRouter();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {JSON.stringify(error)}</p>;
+	useEffect(() => {
+	router.push('/scraps');
+	}, [router]);
 
-  return (
-    <>
-      {console.log(data)}
-      {data?.scraps.map((scrap) => {
-        return (
-          <p>
-            id: {scrap.id}
-            title: {scrap.title}
-            created_at: {scrap.created_at}
-          </p>
-        )
-      })}
-    </>
-  )
-}
+	return null;
+};
 
-export default Home
+
+export default TopPage;

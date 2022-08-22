@@ -5,3 +5,11 @@ query getScraps {
 		created_at
 	}
 }
+
+mutation createScrap($title: String) {
+	insert_scraps_one(object: {title: $title}){
+		id
+		title
+		created_at
+	}
+}
