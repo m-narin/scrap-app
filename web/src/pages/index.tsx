@@ -1,12 +1,15 @@
-import type { NextPage } from 'next'
-import { Header } from '../components/Header'
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-const Home: NextPage = () => {
-  return (
-    <>
-      <Header />
-    </>
-  )
-}
+const TopPage = () => {
+	const router = useRouter();
 
-export default Home
+	useEffect(() => {
+	router.push('/scraps');
+	}, [router]);
+
+	return null;
+};
+
+
+export default TopPage;
