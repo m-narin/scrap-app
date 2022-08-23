@@ -27,6 +27,12 @@ mutation createScrap($title: String!) {
 	}
 }
 
+mutation editScrapTitle($id: Int!, $title: String) {
+	update_scraps_by_pk(pk_columns: {id: $id}, _set: {title: $title}) {
+    id
+  }
+}
+
 mutation createComment($scrapId: Int!, $body: String!) {
 	insert_comments_one(object: {scrap_id: $scrapId, body: $body}) {
 		id
@@ -35,4 +41,9 @@ mutation createComment($scrapId: Int!, $body: String!) {
 	}
 }
 
+mutation deleteScrap($id: Int!) {
+	delete_scraps_by_pk(id: $id) {
+		id
+	}
+}
 
