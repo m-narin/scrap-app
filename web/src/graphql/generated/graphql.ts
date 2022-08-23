@@ -853,14 +853,22 @@ export type GetScrapByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetScrapByIdQuery = { __typename?: 'query_root', scraps_by_pk?: { __typename?: 'scraps', id: number, title: string, created_at: any } | null };
+export type GetScrapByIdQuery = { __typename?: 'query_root', scraps_by_pk?: { __typename?: 'scraps', id: number, title: string, created_at: any, comments: Array<{ __typename?: 'comments', id: number, body: string, created_at: any }> } | null };
 
 export type CreateScrapMutationVariables = Exact<{
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 }>;
 
 
 export type CreateScrapMutation = { __typename?: 'mutation_root', insert_scraps_one?: { __typename?: 'scraps', id: number, title: string, created_at: any } | null };
+
+export type CreateCommentMutationVariables = Exact<{
+  scrapId: Scalars['Int'];
+  body: Scalars['String'];
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'mutation_root', insert_comments_one?: { __typename?: 'comments', id: number, body: string, created_at: any } | null };
 
 
 export const GetScrapsDocument = gql`
@@ -905,6 +913,11 @@ export const GetScrapByIdDocument = gql`
     id
     title
     created_at
+    comments {
+      id
+      body
+      created_at
+    }
   }
 }
     `;
@@ -937,7 +950,7 @@ export type GetScrapByIdQueryHookResult = ReturnType<typeof useGetScrapByIdQuery
 export type GetScrapByIdLazyQueryHookResult = ReturnType<typeof useGetScrapByIdLazyQuery>;
 export type GetScrapByIdQueryResult = Apollo.QueryResult<GetScrapByIdQuery, GetScrapByIdQueryVariables>;
 export const CreateScrapDocument = gql`
-    mutation createScrap($title: String) {
+    mutation createScrap($title: String!) {
   insert_scraps_one(object: {title: $title}) {
     id
     title
@@ -971,3 +984,39 @@ export function useCreateScrapMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateScrapMutationHookResult = ReturnType<typeof useCreateScrapMutation>;
 export type CreateScrapMutationResult = Apollo.MutationResult<CreateScrapMutation>;
 export type CreateScrapMutationOptions = Apollo.BaseMutationOptions<CreateScrapMutation, CreateScrapMutationVariables>;
+export const CreateCommentDocument = gql`
+    mutation createComment($scrapId: Int!, $body: String!) {
+  insert_comments_one(object: {scrap_id: $scrapId, body: $body}) {
+    id
+    body
+    created_at
+  }
+}
+    `;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      scrapId: // value for 'scrapId'
+ *      body: // value for 'body'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;

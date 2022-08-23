@@ -11,13 +11,26 @@ query getScrapById($id: Int!) {
 		id
 		title
 		created_at
+		comments {
+			id
+			body
+			created_at
+		}
 	}
 }
 
-mutation createScrap($title: String) {
+mutation createScrap($title: String!) {
 	insert_scraps_one(object: {title: $title}){
 		id
 		title
+		created_at
+	}
+}
+
+mutation createComment($scrapId: Int!, $body: String!) {
+	insert_comments_one(object: {scrap_id: $scrapId, body: $body}) {
+		id
+		body
 		created_at
 	}
 }
