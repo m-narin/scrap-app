@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { useGetScrapByIdQuery } from '../../graphql/generated/graphql'
+import { useGetScrapByIdQuery,useCreateCommentMutation } from '../../graphql/generated/graphql'
 
 import Stack from "@mui/material/Stack"
 import Card from '@mui/material/Card'
@@ -25,23 +25,17 @@ const DetailPage = () => {
   const [commentInput, setCommentInput] = useState('');
 
   // comment追加のmutation
+	const [mutate] = useCreateCommentMutation({
+    onCompleted(){
+      router.push(`/scraps/${scrap.id}`)
+    },
+    onError(error){
+      console.error(error)
+    }
+  })
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error: {JSON.stringify(error)}</p>;
-
-	// commentのハードコーディング
-	const comments = [
-		{
-			"id": 2,
-			"body": "test2",
-			"created_at": "2022-08-23T02:04:19.133197+00:00"
-		},
-		{
-			"id": 3,
-			"body": "test2-2",
-			"created_at": "2022-08-23T02:04:29.39183+00:00"
-		}
-	]
 
 	return (
 		<>
@@ -53,26 +47,16 @@ const DetailPage = () => {
 			</Typography>
 
 			<Stack mt={3} rowGap={2} alignItems="center">
-				{comments.map((comment) => {
+				{scrap.comments.map((comment) => {
 					return (
-					<Card 
-						sx={{
-							width: '80%',
-							'&:hover': {
-								cursor: "pointer",
-							},
-						}} 
-						onClick={() => {
-							router.push(`/scraps/${scrap.id}`)
-						}}
-					>
-					<CardContent>
-						{comment.created_at}
-						<Typography variant="h6">
-							{comment.body}
-						</Typography>
-					</CardContent>
-				</Card>
+					<Card sx={{ width: '80%' }}>
+						<CardContent>
+							{comment.created_at}
+							<Typography variant="h6">
+								{comment.body}
+							</Typography>
+						</CardContent>
+					</Card>
 					)
 				})}
 			</Stack>
@@ -82,6 +66,7 @@ const DetailPage = () => {
 						onSubmit={e => {
 							e.preventDefault();
 							// comment追加のmutation実行
+							mutate({ variables: { scrapId: scrap.id, body: commentInput} });
 						}}
 					>
 					<Stack spacing={2}>
