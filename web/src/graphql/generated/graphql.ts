@@ -848,6 +848,13 @@ export type GetScrapsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetScrapsQuery = { __typename?: 'query_root', scraps: Array<{ __typename?: 'scraps', id: number, title: string, created_at: any }> };
 
+export type GetScrapByIdQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetScrapByIdQuery = { __typename?: 'query_root', scraps_by_pk?: { __typename?: 'scraps', id: number, title: string, created_at: any } | null };
+
 export type CreateScrapMutationVariables = Exact<{
   title?: InputMaybe<Scalars['String']>;
 }>;
@@ -892,6 +899,43 @@ export function useGetScrapsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetScrapsQueryHookResult = ReturnType<typeof useGetScrapsQuery>;
 export type GetScrapsLazyQueryHookResult = ReturnType<typeof useGetScrapsLazyQuery>;
 export type GetScrapsQueryResult = Apollo.QueryResult<GetScrapsQuery, GetScrapsQueryVariables>;
+export const GetScrapByIdDocument = gql`
+    query getScrapById($id: Int!) {
+  scraps_by_pk(id: $id) {
+    id
+    title
+    created_at
+  }
+}
+    `;
+
+/**
+ * __useGetScrapByIdQuery__
+ *
+ * To run a query within a React component, call `useGetScrapByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetScrapByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetScrapByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetScrapByIdQuery(baseOptions: Apollo.QueryHookOptions<GetScrapByIdQuery, GetScrapByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetScrapByIdQuery, GetScrapByIdQueryVariables>(GetScrapByIdDocument, options);
+      }
+export function useGetScrapByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetScrapByIdQuery, GetScrapByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetScrapByIdQuery, GetScrapByIdQueryVariables>(GetScrapByIdDocument, options);
+        }
+export type GetScrapByIdQueryHookResult = ReturnType<typeof useGetScrapByIdQuery>;
+export type GetScrapByIdLazyQueryHookResult = ReturnType<typeof useGetScrapByIdLazyQuery>;
+export type GetScrapByIdQueryResult = Apollo.QueryResult<GetScrapByIdQuery, GetScrapByIdQueryVariables>;
 export const CreateScrapDocument = gql`
     mutation createScrap($title: String) {
   insert_scraps_one(object: {title: $title}) {
