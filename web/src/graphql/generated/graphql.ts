@@ -862,6 +862,14 @@ export type CreateScrapMutationVariables = Exact<{
 
 export type CreateScrapMutation = { __typename?: 'mutation_root', insert_scraps_one?: { __typename?: 'scraps', id: number, title: string, created_at: any } | null };
 
+export type EditScrapTitleMutationVariables = Exact<{
+  id: Scalars['Int'];
+  title?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type EditScrapTitleMutation = { __typename?: 'mutation_root', update_scraps_by_pk?: { __typename?: 'scraps', id: number } | null };
+
 export type CreateCommentMutationVariables = Exact<{
   scrapId: Scalars['Int'];
   body: Scalars['String'];
@@ -991,6 +999,40 @@ export function useCreateScrapMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateScrapMutationHookResult = ReturnType<typeof useCreateScrapMutation>;
 export type CreateScrapMutationResult = Apollo.MutationResult<CreateScrapMutation>;
 export type CreateScrapMutationOptions = Apollo.BaseMutationOptions<CreateScrapMutation, CreateScrapMutationVariables>;
+export const EditScrapTitleDocument = gql`
+    mutation editScrapTitle($id: Int!, $title: String) {
+  update_scraps_by_pk(pk_columns: {id: $id}, _set: {title: $title}) {
+    id
+  }
+}
+    `;
+export type EditScrapTitleMutationFn = Apollo.MutationFunction<EditScrapTitleMutation, EditScrapTitleMutationVariables>;
+
+/**
+ * __useEditScrapTitleMutation__
+ *
+ * To run a mutation, you first call `useEditScrapTitleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditScrapTitleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editScrapTitleMutation, { data, loading, error }] = useEditScrapTitleMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useEditScrapTitleMutation(baseOptions?: Apollo.MutationHookOptions<EditScrapTitleMutation, EditScrapTitleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditScrapTitleMutation, EditScrapTitleMutationVariables>(EditScrapTitleDocument, options);
+      }
+export type EditScrapTitleMutationHookResult = ReturnType<typeof useEditScrapTitleMutation>;
+export type EditScrapTitleMutationResult = Apollo.MutationResult<EditScrapTitleMutation>;
+export type EditScrapTitleMutationOptions = Apollo.BaseMutationOptions<EditScrapTitleMutation, EditScrapTitleMutationVariables>;
 export const CreateCommentDocument = gql`
     mutation createComment($scrapId: Int!, $body: String!) {
   insert_comments_one(object: {scrap_id: $scrapId, body: $body}) {

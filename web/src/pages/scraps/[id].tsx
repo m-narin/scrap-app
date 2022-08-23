@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { 
 	useGetScrapByIdQuery, 
+	useEditScrapTitleMutation,
+	useDeleteScrapMutation,
 	useCreateCommentMutation, 
-	useDeleteScrapMutation 
 } from '../../graphql/generated/graphql'
 
 import Stack from "@mui/material/Stack"
@@ -15,7 +16,6 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
-
 const DetailPage = () => {
 	
 	const router = useRouter()
@@ -26,10 +26,23 @@ const DetailPage = () => {
 
 	const scrap = data?.scraps_by_pk!
 
+	// 編集のState
+	const [scrapEditInput, setScrapEditInput] = useState('');
+
 	// scrap削除のmutation
 	const [deleteMutate] = useDeleteScrapMutation({
     onCompleted(){
       router.push('/')
+    },
+    onError(error){
+      console.error(error)
+    }
+  })
+
+	// scrap編集のmutation
+	const [editMutate] = 	useEditScrapTitleMutation({
+    onCompleted(){
+      router.push(`/scraps/${scrap.id}`)
     },
     onError(error){
       console.error(error)
@@ -67,9 +80,33 @@ const DetailPage = () => {
 					スクラップを削除する
 				</Button> 
 			</Stack>
-			<Typography variant="h5" sx={{width: '80%', margin: '20px auto'}}>
+
+			<Typography variant='h4' sx={{width: '80%', margin: '0 auto'}}>
 				{scrap.title}
 			</Typography>
+
+			<Stack direction="row" spacing={2} sx={{width: '80%', margin: '20px auto'}}>
+				<form
+						onSubmit={e => {
+							e.preventDefault();
+							// ScarpUpdateのmutation実行
+							editMutate({ variables: { id: scrap.id, title: scrapEditInput} });
+						}}
+					>
+				<TextField 
+					value={scrapEditInput}
+					onChange={e => (setScrapEditInput(e.target.value))}
+				/>
+				<Button
+					type="submit"
+					color="success"
+					variant="contained"
+					sx = {{width: '180px'}}
+				>
+					スクラップを編集する
+				</Button> 
+				</form>
+			</Stack>
 
 			<Stack mt={3} rowGap={2} alignItems="center">
 				{scrap.comments.map((comment) => {
@@ -114,8 +151,8 @@ const DetailPage = () => {
 							投稿する
 						</Button> 
 					</Stack>
-					</form> 
-				</Box>
+				</form> 
+			</Box>
 		</>
 	)
 }
