@@ -22,7 +22,7 @@ const DetailPage = () => {
 	const id = router.query.id as string
 
 	// Scrapとそのcomment一覧のquery
-	const { loading, data, error } = useGetScrapByIdQuery({ variables: { id: Number(id) } })
+	const { data, loading, error, refetch } = useGetScrapByIdQuery({ variables: { id: Number(id) } })
 
 	const scrap = data?.scraps_by_pk!
 
@@ -42,7 +42,7 @@ const DetailPage = () => {
 	// scrap編集のmutation
 	const [editMutate] = 	useEditScrapTitleMutation({
     onCompleted(){
-      router.push(`/scraps/${scrap.id}`)
+			refetch()
     },
     onError(error){
       console.error(error)
@@ -55,7 +55,7 @@ const DetailPage = () => {
   // comment追加のmutation
 	const [mutate] = useCreateCommentMutation({
     onCompleted(){
-      router.push(`/scraps/${scrap.id}`)
+      refetch()
     },
     onError(error){
       console.error(error)
