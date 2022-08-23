@@ -35,4 +35,9 @@ mutation createComment($scrapId: Int!, $body: String!) {
 	}
 }
 
+mutation deleteScrap($id: Int!) {
+	delete_scraps_by_pk(id: $id) {
+		id
+	}
+}
 

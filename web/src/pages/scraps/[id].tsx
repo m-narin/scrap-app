@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { useGetScrapByIdQuery,useCreateCommentMutation } from '../../graphql/generated/graphql'
+import { 
+	useGetScrapByIdQuery, 
+	useCreateCommentMutation, 
+	useDeleteScrapMutation 
+} from '../../graphql/generated/graphql'
 
 import Stack from "@mui/material/Stack"
 import Card from '@mui/material/Card'
@@ -19,7 +23,18 @@ const DetailPage = () => {
 
 	// Scrapとそのcomment一覧のquery
 	const { loading, data, error } = useGetScrapByIdQuery({ variables: { id: Number(id) } })
+
 	const scrap = data?.scraps_by_pk!
+
+	// scrap削除のmutation
+	const [deleteMutate] = useDeleteScrapMutation({
+    onCompleted(){
+      router.push('/')
+    },
+    onError(error){
+      console.error(error)
+    }
+  })
 
 	// comment入力のsate
   const [commentInput, setCommentInput] = useState('');
@@ -39,9 +54,19 @@ const DetailPage = () => {
 
 	return (
 		<>
-			<Typography sx={{width: '80%', margin: '20px auto', fontWeight: 'lighter'}}>
-				{scrap.created_at}
-			</Typography>
+			<Stack direction="row" spacing={2} sx={{width: '80%', margin: '20px auto'}}>
+				<Typography sx={{width: '80%', fontWeight: 'lighter'}}>
+					{scrap.created_at}
+				</Typography>
+				<Button
+					color="error"
+					variant="contained"
+					sx = {{width: '180px'}}
+					onClick = {()=>{deleteMutate({variables: {id : scrap.id}})}}
+				>
+					スクラップを削除する
+				</Button> 
+			</Stack>
 			<Typography variant="h5" sx={{width: '80%', margin: '20px auto'}}>
 				{scrap.title}
 			</Typography>
@@ -84,14 +109,13 @@ const DetailPage = () => {
 						<Button
 							type="submit"
 							variant="contained"
-							sx = {{width: '20%', marginLeft:'auto'}}
+							sx = {{width: '180px', marginLeft:'auto'}}
 						>
 							投稿する
 						</Button> 
 					</Stack>
 					</form> 
 				</Box>
-			
 		</>
 	)
 }

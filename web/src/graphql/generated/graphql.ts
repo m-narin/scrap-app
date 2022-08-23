@@ -870,6 +870,13 @@ export type CreateCommentMutationVariables = Exact<{
 
 export type CreateCommentMutation = { __typename?: 'mutation_root', insert_comments_one?: { __typename?: 'comments', id: number, body: string, created_at: any } | null };
 
+export type DeleteScrapMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteScrapMutation = { __typename?: 'mutation_root', delete_scraps_by_pk?: { __typename?: 'scraps', id: number } | null };
+
 
 export const GetScrapsDocument = gql`
     query getScraps {
@@ -1020,3 +1027,36 @@ export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
 export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
 export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
+export const DeleteScrapDocument = gql`
+    mutation deleteScrap($id: Int!) {
+  delete_scraps_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteScrapMutationFn = Apollo.MutationFunction<DeleteScrapMutation, DeleteScrapMutationVariables>;
+
+/**
+ * __useDeleteScrapMutation__
+ *
+ * To run a mutation, you first call `useDeleteScrapMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteScrapMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteScrapMutation, { data, loading, error }] = useDeleteScrapMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteScrapMutation(baseOptions?: Apollo.MutationHookOptions<DeleteScrapMutation, DeleteScrapMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteScrapMutation, DeleteScrapMutationVariables>(DeleteScrapDocument, options);
+      }
+export type DeleteScrapMutationHookResult = ReturnType<typeof useDeleteScrapMutation>;
+export type DeleteScrapMutationResult = Apollo.MutationResult<DeleteScrapMutation>;
+export type DeleteScrapMutationOptions = Apollo.BaseMutationOptions<DeleteScrapMutation, DeleteScrapMutationVariables>;
