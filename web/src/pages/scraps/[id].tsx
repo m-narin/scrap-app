@@ -19,6 +19,7 @@ import Button from '@mui/material/Button'
 const DetailPage = () => {
 	
 	const router = useRouter()
+	console.log(router.query)
 	const id = router.query.id as string
 
 	// Scrapとそのcomment一覧のquery

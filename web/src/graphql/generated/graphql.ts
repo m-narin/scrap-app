@@ -843,7 +843,9 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamptz']>>;
 };
 
-export type GetScrapsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetScrapsQueryVariables = Exact<{
+  title?: InputMaybe<Scalars['String']>;
+}>;
 
 
 export type GetScrapsQuery = { __typename?: 'query_root', scraps: Array<{ __typename?: 'scraps', id: number, title: string, created_at: any, comments_aggregate: { __typename?: 'comments_aggregate', aggregate?: { __typename?: 'comments_aggregate_fields', count: number } | null } }> };
@@ -887,8 +889,8 @@ export type DeleteScrapMutation = { __typename?: 'mutation_root', delete_scraps_
 
 
 export const GetScrapsDocument = gql`
-    query getScraps {
-  scraps(order_by: {created_at: desc}) {
+    query getScraps($title: String) {
+  scraps(order_by: {created_at: desc}, where: {title: {_like: $title}}) {
     id
     title
     created_at
@@ -913,6 +915,7 @@ export const GetScrapsDocument = gql`
  * @example
  * const { data, loading, error } = useGetScrapsQuery({
  *   variables: {
+ *      title: // value for 'title'
  *   },
  * });
  */

@@ -1,5 +1,5 @@
-query getScraps { 
-	scraps(order_by: {created_at: desc}) {
+query getScraps($title: String) { 
+	scraps(order_by: {created_at: desc}, where: {title: {_like: $title}}) {
 		id
 		title
 		created_at
@@ -34,8 +34,8 @@ mutation createScrap($title: String!) {
 
 mutation editScrapTitle($id: Int!, $title: String) {
 	update_scraps_by_pk(pk_columns: {id: $id}, _set: {title: $title}) {
-    id
-  }
+		id
+	}
 }
 
 mutation createComment($scrapId: Int!, $body: String!) {
