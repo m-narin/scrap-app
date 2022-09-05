@@ -5,7 +5,7 @@ const TopPage = () => {
 	const router = useRouter();
 
 	useEffect(() => {
-	router.push('/scraps');
+		router.push('/scraps');
 	}, [router]);
 
 	return null;
