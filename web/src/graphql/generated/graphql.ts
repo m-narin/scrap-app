@@ -846,7 +846,7 @@ export type Timestamptz_Comparison_Exp = {
 export type GetScrapsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetScrapsQuery = { __typename?: 'query_root', scraps: Array<{ __typename?: 'scraps', id: number, title: string, created_at: any }> };
+export type GetScrapsQuery = { __typename?: 'query_root', scraps: Array<{ __typename?: 'scraps', id: number, title: string, created_at: any, comments_aggregate: { __typename?: 'comments_aggregate', aggregate?: { __typename?: 'comments_aggregate_fields', count: number } | null } }> };
 
 export type GetScrapByIdQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -892,6 +892,11 @@ export const GetScrapsDocument = gql`
     id
     title
     created_at
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
   }
 }
     `;

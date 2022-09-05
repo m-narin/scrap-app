@@ -1,6 +1,7 @@
 import { useGetScrapsQuery } from '../../graphql/generated/graphql'
 
 import Stack from "@mui/material/Stack"
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
@@ -16,6 +17,7 @@ const Home = () => {
 
 	return (
 		<>
+		{console.log(data)}
 			<Stack mt={3} rowGap={2} alignItems="center">
 				{data?.scraps.map((scrap) => {
 					return (
@@ -31,11 +33,24 @@ const Home = () => {
 						}}
 					>
 						<CardContent>
-							<Typography variant="h6">
-								{scrap.title}
-							</Typography>
+							<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+								<Box>
+									<Typography variant="h6">
+										{scrap.title}
+									</Typography>
+									{scrap.created_at}
+								</Box>
+								<Box>
+									<Typography>
+										コメント数
+									</Typography>
+									<Typography sx={{ textAlign: 'right' }}>
+										{scrap.comments_aggregate.aggregate?.count}
+									</Typography>
+								</Box>
+							</Box>
 						</CardContent>
-						{scrap.created_at}
+						
 					</Card>
 					)
 				})}

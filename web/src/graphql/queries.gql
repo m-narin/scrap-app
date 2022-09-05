@@ -3,6 +3,11 @@ query getScraps {
 		id
 		title
 		created_at
+		comments_aggregate {
+			aggregate {
+				count
+			}
+		}
 	}
 }
 
