@@ -7,6 +7,8 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
+import SearchIcon from '@mui/icons-material/Search'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -39,8 +41,8 @@ const Home = () => {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
-          <Button type="submit" variant="contained">
-            スクラップを検索
+          <Button type="submit">
+            <SearchIcon />
           </Button>
         </Stack>
       </form>
@@ -65,7 +67,7 @@ const Home = () => {
                     {scrap.created_at}
                   </Box>
                   <Box>
-                    <Typography>コメント数</Typography>
+                    <ChatBubbleOutlineIcon />
                     <Typography sx={{ textAlign: 'right' }}>{scrap.comments_aggregate.aggregate?.count}</Typography>
                   </Box>
                 </Box>

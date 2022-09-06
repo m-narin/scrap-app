@@ -3,7 +3,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/router'
-// import CreateIcon from '@mui/icons-material/Create';
+import CreateIcon from '@mui/icons-material/Create'
 
 export const Header = () => {
   const router = useRouter()
@@ -29,7 +29,7 @@ export const Header = () => {
         <Button
           variant="contained"
           color="primary"
-          // startIcon={<CreateIcon />}
+          startIcon={<CreateIcon />}
           onClick={() => {
             router.push('/scraps/new')
           }}
