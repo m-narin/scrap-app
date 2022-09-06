@@ -1,15 +1,14 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const TopPage = () => {
-	const router = useRouter();
+  const router = useRouter()
 
-	useEffect(() => {
-		router.push('/scraps');
-	}, [router]);
+  useEffect(() => {
+    router.push('/scraps')
+  }, [router])
 
-	return null;
-};
+  return null
+}
 
-
-export default TopPage;
+export default TopPage
