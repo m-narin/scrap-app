@@ -21,6 +21,11 @@ query getScrapById($id: Int!) {
 			body
 			created_at
 		}
+		comments_aggregate {
+			aggregate {
+				count
+			}
+		}
 	}
 }
 
