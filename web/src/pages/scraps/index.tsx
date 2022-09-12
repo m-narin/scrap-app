@@ -12,6 +12,7 @@ import SearchIcon from '@mui/icons-material/Search'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { Opacity } from '@mui/icons-material'
 
 const Home = () => {
   const router = useRouter()
@@ -53,8 +54,10 @@ const Home = () => {
               variant="outlined"
               sx={{
                 width: '95%',
+                transition: '0.2s',
                 '&:hover': {
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  opacity: '0.6'
                 }
               }}
               onClick={() => {
@@ -65,11 +68,13 @@ const Home = () => {
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Box>
                     <Typography variant="h6">{scrap.title}</Typography>
-                    <Typography  variant="subtitle2" sx={{ color: 'gray', fontWeight:'300'}}>{scrap.created_at}</Typography>
+                    <Typography variant="subtitle2" sx={{ color: 'gray', fontWeight: '300' }}>
+                      {scrap.created_at}
+                    </Typography>
                   </Box>
-                  <Box sx={{color: 'gray'}}>
+                  <Box sx={{ color: 'gray' }}>
                     <ChatBubbleOutlineIcon />
-                    <Typography sx={{ textAlign:'center' }}>{scrap.comments_aggregate.aggregate?.count}</Typography>
+                    <Typography sx={{ textAlign: 'center' }}>{scrap.comments_aggregate.aggregate?.count}</Typography>
                   </Box>
                 </Box>
               </CardContent>
