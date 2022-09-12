@@ -12,6 +12,7 @@ import SearchIcon from '@mui/icons-material/Search'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { Opacity } from '@mui/icons-material'
 
 const Home = () => {
   const router = useRouter()
@@ -33,7 +34,7 @@ const Home = () => {
           })
         }}
       >
-        <Stack direction="row" mt={4} spacing={2} justifyContent="right">
+        <Stack direction="row" mt={2} spacing={2} justifyContent="right">
           <TextField
             id="outlined-basic"
             label="タイトル"
@@ -46,14 +47,17 @@ const Home = () => {
           </Button>
         </Stack>
       </form>
-      <Stack mt={3} rowGap={2} alignItems="center">
+      <Stack mt={2} rowGap={1} alignItems="center">
         {data?.scraps.map((scrap) => {
           return (
             <Card
+              variant="outlined"
               sx={{
-                width: '80%',
+                width: '95%',
+                transition: '0.2s',
                 '&:hover': {
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  opacity: '0.6'
                 }
               }}
               onClick={() => {
@@ -64,11 +68,13 @@ const Home = () => {
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Box>
                     <Typography variant="h6">{scrap.title}</Typography>
-                    {scrap.created_at}
+                    <Typography variant="subtitle2" sx={{ color: 'gray', fontWeight: '300' }}>
+                      {scrap.created_at}
+                    </Typography>
                   </Box>
-                  <Box>
+                  <Box sx={{ color: 'gray' }}>
                     <ChatBubbleOutlineIcon />
-                    <Typography sx={{ textAlign: 'right' }}>{scrap.comments_aggregate.aggregate?.count}</Typography>
+                    <Typography sx={{ textAlign: 'center' }}>{scrap.comments_aggregate.aggregate?.count}</Typography>
                   </Box>
                 </Box>
               </CardContent>

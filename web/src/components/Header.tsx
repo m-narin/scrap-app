@@ -9,12 +9,20 @@ export const Header = () => {
   const router = useRouter()
 
   return (
-    <AppBar position="static" color="inherit" component="div">
-      <Toolbar>
+    <AppBar 
+    position="static" 
+    color="inherit" 
+    component="div" 
+    elevation={0}
+    sx={{height: '70px'}}
+    
+    >
+      <Toolbar sx={{margin: 'auto 3%'}}>
         <Typography
-          variant="h4"
           sx={{
             color: '#1976d2',
+            fontSize: 27,
+            fontWeight: 700,
             '&:hover': {
               cursor: 'pointer'
             }
@@ -28,6 +36,8 @@ export const Header = () => {
         <div style={{ flexGrow: 1 }}></div>
         <Button
           variant="contained"
+          disableElevation
+          size="large"
           color="primary"
           startIcon={<CreateIcon />}
           onClick={() => {
