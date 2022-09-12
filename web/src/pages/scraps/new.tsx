@@ -24,9 +24,11 @@ const AddScrap = () => {
   return (
     <>
       <Stack mt={4} rowGap={4} alignItems="center">
-        <Typography variant="h3">New Scrap</Typography>
+        <Typography variant="h3" sx={{ marginTop: '50px' }}>
+          New Scrap
+        </Typography>
 
-        <FormLabel>スクラップはスレッド形式で気軽に知見をまとめられる場所です。</FormLabel>
+        <FormLabel sx={{ color: 'gray' }}>スクラップはスレッド形式で気軽に知見をまとめられる場所です。</FormLabel>
         <form
           onSubmit={(e) => {
             // submitイベントのデフォルトの動作をキャンセルする
@@ -34,17 +36,18 @@ const AddScrap = () => {
             mutate({ variables: { title: scrapInput } })
           }}
         >
-          <Stack mt={4} spacing={2}>
+          <Stack mt={2} spacing={2}>
             <TextField
               id="outlined-basic"
-              label="タイトル"
+              placeholder="タイトル"
+              sx={{ width: '50ch' }}
               variant="outlined"
               value={scrapInput}
               onChange={(e) => setScrapInput(e.target.value)}
             />
           </Stack>
           <Stack mt={4} spacing={2}>
-            <Button type="submit" variant="contained">
+            <Button type="submit" sx={{ width: '20ch', margin: '0 auto' }} variant="contained" disabled={!scrapInput}>
               スクラップを作成
             </Button>
           </Stack>
