@@ -9,10 +9,10 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import SearchIcon from '@mui/icons-material/Search'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { Opacity } from '@mui/icons-material'
 
 const Home = () => {
   const router = useRouter()
@@ -20,11 +20,20 @@ const Home = () => {
   const { loading, data, error } = useGetScrapsQuery({ variables: { title: `%${title}%` } })
   const [searchInput, setSearchInput] = useState('')
 
-  if (loading) return <p>Loading...</p>
+  if (loading)
+    return (
+      <>
+        {console.log('loading')}
+        <Box sx={{ textAlign: 'center', marginTop: '70px' }}>
+          <CircularProgress />
+        </Box>
+      </>
+    )
   if (error) return <p>Error: {JSON.stringify(error)}</p>
 
   return (
     <>
+      {console.log('page')}
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -48,7 +57,7 @@ const Home = () => {
         </Stack>
       </form>
       <Stack mt={2} rowGap={1} alignItems="center">
-        {data?.scraps.map((scrap) => {
+        {data?.scraps.map((scrap, key) => {
           return (
             <Card
               variant="outlined"
@@ -63,6 +72,7 @@ const Home = () => {
               onClick={() => {
                 router.push(`/scraps/${scrap.id}`)
               }}
+              key={key}
             >
               <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
