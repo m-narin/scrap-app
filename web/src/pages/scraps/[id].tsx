@@ -23,6 +23,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 
 import { styled } from '@mui/material/styles'
+import { CircularProgress } from '@mui/material'
 
 const CustomEditIcon = styled(EditIcon)({
   padding: '8px',
@@ -113,7 +114,12 @@ const DetailPage = () => {
     seteditActive(false)
   }
 
-  if (loading) return <p>Loading...</p>
+  if (loading)
+    return (
+      <Box sx={{ textAlign: 'center', marginTop: '70px' }}>
+        <CircularProgress />
+      </Box>
+    )
   if (error) return <p>Error: {JSON.stringify(error)}</p>
 
   return (
