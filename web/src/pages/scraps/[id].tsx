@@ -25,6 +25,8 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import { styled } from '@mui/material/styles'
 import { CircularProgress } from '@mui/material'
 
+import { toRelativeDate } from '../lib/toRelativeDate'
+
 const CustomEditIcon = styled(EditIcon)({
   padding: '8px',
   color: 'gray',
@@ -126,7 +128,7 @@ const DetailPage = () => {
     <>
       <Stack direction="row" spacing={2} sx={{ width: '80%', margin: '20px auto' }}>
         <Typography sx={{ display: 'flex', alignItems: 'center', width: '80%', fontWeight: 'lighter', color: 'gray' }}>
-          <Box sx={{ marginRight: '20px' }}>{scrap.created_at}</Box>
+          <Box sx={{ marginRight: '20px' }}>{`${toRelativeDate(scrap.created_at)}に作成`}</Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <ChatBubbleOutlineIcon />
             {scrap.comments_aggregate.aggregate?.count}
@@ -168,7 +170,9 @@ const DetailPage = () => {
           return (
             <Card sx={{ width: '80%' }}>
               <CardContent>
-                <Typography sx={{ color: 'gray', marginBottom: '20px' }}>{comment.created_at}</Typography>
+                <Typography sx={{ color: 'gray', marginBottom: '20px' }}>{`${toRelativeDate(
+                  comment.created_at
+                )}に作成`}</Typography>
                 <Typography>{comment.body}</Typography>
               </CardContent>
             </Card>

@@ -14,6 +14,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
+import { toRelativeDate } from '../lib/toRelativeDate'
+
 const Home = () => {
   const router = useRouter()
   const title = router.query.title ?? ''
@@ -79,7 +81,7 @@ const Home = () => {
                   <Box>
                     <Typography variant="h6">{scrap.title}</Typography>
                     <Typography variant="subtitle2" sx={{ color: 'gray', fontWeight: '300' }}>
-                      {scrap.created_at}
+                      {`${toRelativeDate(scrap.created_at)}に作成`}
                     </Typography>
                   </Box>
                   <Box sx={{ color: 'gray' }}>
